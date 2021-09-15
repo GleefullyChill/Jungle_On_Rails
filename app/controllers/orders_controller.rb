@@ -26,6 +26,11 @@ class OrdersController < ApplicationController
     update_cart({})
   end
 
+  def ordered_email
+    @ordered_email ||= Order.where(id: params[:id]).first().email
+  end
+  helper_method :ordered_email
+
   def order_line_items
     @order_line_items ||= LineItem.where(order_id: params[:id])
   end
@@ -36,6 +41,11 @@ class OrdersController < ApplicationController
     @ordered_items ||= Product.where(id: order_line_items.first().product_id).map {|product| { product:product, quantity:order_line_items.first().quantity, total_price_cents:order_line_items.first().total_price_cents } }
   end
   helper_method :ordered_items
+
+  def ordered_subtotal_cents
+    ordered_items.map {|entry| entry[:product].price_cents * entry[:quantity]}.sum
+  end
+  helper_method :ordered_subtotal_cents
 
   def perform_stripe_charge
     Stripe::Charge.create(
