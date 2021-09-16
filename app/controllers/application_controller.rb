@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
 
   def enhanced_cart
     @enhanced_cart ||= Product.where(id: cart.keys).map {|product| { product:product, quantity: cart[product.id.to_s] } }
+    puts @enhanced_cart
+    return @enhanced_cart
   end
   helper_method :enhanced_cart
 
