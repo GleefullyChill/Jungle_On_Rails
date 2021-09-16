@@ -1,5 +1,5 @@
 class Admin::CategoriesController < ApplicationController
-  def list
-    show
+  include HttpAuthConcern
+  def index
   end
 end
