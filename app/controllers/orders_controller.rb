@@ -37,13 +37,12 @@ class OrdersController < ApplicationController
   helper_method :order_line_items
 
   def ordered_items
-    #@ordered_items = order_line_items.first().inspect
-    @ordered_items ||= Product.where(id: order_line_items.first().product_id).map {|product| { product:product, quantity:order_line_items.first().quantity, total_price_cents:order_line_items.first().total_price_cents } }
+    order_line_items.map {|item|  Product.where(id: item.product_id).map {|product| { product:product, quantity:item.quantity, total_price_cents:item.total_price_cents } }}
   end
   helper_method :ordered_items
 
   def ordered_subtotal_cents
-    ordered_items.map {|entry| entry[:product].price_cents * entry[:quantity]}.sum
+    ordered_items.first.map {|entry| entry[:product].price_cents * entry[:quantity]}.sum
   end
   helper_method :ordered_subtotal_cents
 
