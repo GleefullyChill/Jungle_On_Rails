@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       redirect_to :root, notice: 'Account created successfully!'
     else
       flash[:error] = 'An error occured!'
-      render 'new'
+      render 'users/new'
     end
   end
 
