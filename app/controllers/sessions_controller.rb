@@ -3,11 +3,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenitcate_with_credentials(params[:email], params[:password])
+    if user = User.authenitcate_with_credentials(params['/sessions'][:email], params['/sessions'][:password])
       session[:user_id] = user.id
       redirect_to :root
     else
-      redirect_to :root
+      flash[:error] = 'An error occured!'
+      render 'new'
     end
   end
 
