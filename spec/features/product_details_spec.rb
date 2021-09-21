@@ -17,7 +17,7 @@ RSpec.feature "Visitor navigates to home pages", type: :feature, js: true do
     end
   end
 
-  scenario "They see all products" do
+  scenario "They see a specific product" do
     # ACT
     visit product_path(1)
 
@@ -25,4 +25,15 @@ RSpec.feature "Visitor navigates to home pages", type: :feature, js: true do
     save_screenshot
     expect(page).to have_css 'article.product-detail', count: 1
   end
+
+  scenario "They see a specific product by clicking on product name" do
+    # ACT
+    visit root_path
+    first(:link, href: '/products/2', class: 'btn btn-default pull-right').click
+    sleep 2
+    # DEBUG / VERIFY
+    save_screenshot
+    expect(page).to have_css 'article.product-detail', count: 1
+  end
+
 end
