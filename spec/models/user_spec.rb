@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'Validations' do
 
-    it "is valid when all fields are correctly given" do
+    it "is valid when all input is valid" do
       @first_name = 'Stacy'
       @last_name = 'Mathews'
       @email = 'SandM@bdsm.ca'
@@ -129,6 +129,7 @@ RSpec.describe User, type: :model do
       password_confirmation: @password_confirmation
       )
       @user.valid?
+      #show different more detailed syntax
       expect(@user.errors.messages[:password_confirmation]).to include("can't be blank")
     end
 
@@ -145,7 +146,7 @@ RSpec.describe User, type: :model do
       @user_dup = User.new(
         first_name: 'Stacy',
         last_name: 'Mathews',
-        email: 'SandM@bdsm.ca',
+        email: 'SandM@bdSM.ca',
         password: 'saturdaynight',
         password_confirmation: 'saturdaynight'
       )
@@ -163,14 +164,14 @@ RSpec.describe User, type: :model do
         :password => 'saturdaynight',
         :password_confirmation => 'saturdaynight'
       )
-      @email = 'SANDM@BDSM.CA'
+      @email = 'SandM@bdsm.ca'
       @password = 'saturdaynight'
       @authenticated = User.authenticate_with_credentials(@email, @password)
 
       expect(@authenticated.email).to eq(@email)
       expect(@authenticated.password_digest).to_not eq(@password)
     end
-    it "successfully logs in when given mixed case email" do
+    it "successfully logs in when given different mixed case email" do
       @user = User.create(
         :first_name => 'Stacy',
         :last_name => 'Mathews',
@@ -192,7 +193,7 @@ RSpec.describe User, type: :model do
         :password => 'saturdaynight',
         :password_confirmation => 'saturdaynight'
       )
-      @email = 'SANDM@BDSM.CA'
+      @email = '      SANDM@BDSM.CA      '
       @password = 'saturdaynight'
       @authenticated = User.authenticate_with_credentials(@email, @password)
 
@@ -207,10 +208,10 @@ RSpec.describe User, type: :model do
         :password_confirmation => 'saturdaynight'
       )
       @email = 'SANDM@BDSM.CA'
-      @password = 'saturdaynight'
+      @password = 'sittingathomealonenight'
       @authenticated = User.authenticate_with_credentials(@email, @password)
 
-      expect(@authenticated.email).to eq(@email)
+      expect(@authenticated).to eq(false)
     end
   end
 end
