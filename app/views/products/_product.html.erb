@@ -1,5 +1,5 @@
 <article class="product">
-  <% if (product.quantity < 1) %>
+  <% if (sold_out?(product.id)) %>
     <aside class="sold-out">
       SOLD OUT
     </aside>
