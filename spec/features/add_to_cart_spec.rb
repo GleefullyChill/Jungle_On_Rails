@@ -17,23 +17,12 @@ RSpec.feature "Visitor navigates to home pages", type: :feature, js: true do
     end
   end
 
-  scenario "They see a specific product" do
-    # ACT
-    visit product_path(1)
-
-    # DEBUG / VERIFY
-    save_screenshot
-    expect(page).to have_css 'article.product-detail', count: 1
-  end
-
-  scenario "They see a specific product by clicking on product name" do
+  scenario "They see an increase in the count beside the cart when they click on an 'add to cart'" do
     # ACT
     visit root_path
-    find("h4", match: :first).click
-    sleep 2
+    find(".button_to", match: :first).click
     # DEBUG / VERIFY
     save_screenshot
-    expect(page).to have_css 'article.product-detail', count: 1
+    expect(page).to have_content('My Cart (1)')
   end
-
 end
