@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     self.email.strip!
   end
 
-  def self.authenitcate_with_credentials(email, password)
+  def self.authenticate_with_credentials(email, password)
     email.strip!
     email.downcase!
     User.find_by(email: "#{email}").try(:authenticate, "#{password}")

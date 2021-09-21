@@ -121,7 +121,6 @@ RSpec.describe User, type: :model do
       @last_name = 'Mathews'
       @email = 'SandM@bdsm.ca'
       @password = 'saturdaynight'
-      @password_confirmation = 'saturdaynight'
       @user = User.new(
       first_name: @first_name,
       last_name: @last_name,
@@ -130,44 +129,46 @@ RSpec.describe User, type: :model do
       password_confirmation: @password_confirmation
       )
       @user.valid?
-      expect(@user.errors.messages[:password_confirmation]).to include("doesn't match Password")
+      expect(@user.errors.messages[:password_confirmation]).to include("can't be blank")
     end
 
     it "is not valid if the email is already in use, ignoring mixed case" do
-      @user_first = User.create(
-        :first_name => 'Sandy',
-        :last_name => 'Mathews',
-        :email => 'SandM@bdsm.ca',
-        :password => 'saturdaynight',
-        :password_confirmation => 'saturdaynight'
-      )
-      @user_first.save
-      
-      @first_name = 'Stacy'
-      @last_name = 'Mathews'
-      @email = 'SANDM@BDSM.CA'
-      @password = 'saturdaynight'
-      @password_confirmation = 'saturdaynight'
       @user = User.new(
-      first_name: @first_name,
-      last_name: @last_name,
-      email: @email,
-      password: @password,
-      password_confirmation: @password_confirmation
+        first_name: 'Stacy',
+        last_name: 'Mathews',
+        email: 'SandM@bdsm.ca',
+        password: 'saturdaynight',
+        password_confirmation: 'saturdaynight'
       )
-      expect(@user).to_not be_valid
+      @user.save
+
+      @user_dup = User.new(
+        first_name: 'Stacy',
+        last_name: 'Mathews',
+        email: 'SandM@bdsm.ca',
+        password: 'saturdaynight',
+        password_confirmation: 'saturdaynight'
+      )
+      @user_dup.valid?
+      expect(@user_dup).to_not be_valid
     end
   end
 
   describe '.authenticate_with_credentials' do
     it "successfully logs in when provided proper information" do
-      @user1 = User.create(
+      @user = User.create(
         :first_name => 'Stacy',
         :last_name => 'Mathews',
         :email => 'SandM@bdsm.ca',
         :password => 'saturdaynight',
         :password_confirmation => 'saturdaynight'
       )
+      @email = 'SANDM@BDSM.CA'
+      @password = 'saturdaynight'
+      @authenticated = User.authenticate_with_credentials(@email, @password)
+
+      expect(@authenticated.email).to eq(@email)
+      expect(@authenticated.password_digest).to_not eq(@password)
     end
     it "successfully logs in when given mixed case email" do
       @user = User.create(
@@ -177,6 +178,11 @@ RSpec.describe User, type: :model do
         :password => 'saturdaynight',
         :password_confirmation => 'saturdaynight'
       )
+      @email = 'SANDM@BDSM.CA'
+      @password = 'saturdaynight'
+      @authenticated = User.authenticate_with_credentials(@email, @password)
+
+      expect(@authenticated.email).to eq(@email)
     end
     it "successfully logs in when user adds space on either side of email" do
       @user = User.create(
@@ -186,6 +192,11 @@ RSpec.describe User, type: :model do
         :password => 'saturdaynight',
         :password_confirmation => 'saturdaynight'
       )
+      @email = 'SANDM@BDSM.CA'
+      @password = 'saturdaynight'
+      @authenticated = User.authenticate_with_credentials(@email, @password)
+
+      expect(@authenticated.email).to eq(@email)
     end
     it "successfully  prevents logging in when provided wrong information" do
       @user = User.create(
@@ -195,6 +206,11 @@ RSpec.describe User, type: :model do
         :password => 'saturdaynight',
         :password_confirmation => 'saturdaynight'
       )
+      @email = 'SANDM@BDSM.CA'
+      @password = 'saturdaynight'
+      @authenticated = User.authenticate_with_credentials(@email, @password)
+
+      expect(@authenticated.email).to eq(@email)
     end
   end
 end
