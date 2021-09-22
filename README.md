@@ -1,10 +1,16 @@
 # Jungle
 
-A mini e-commerce application built with Rails 4.2 for purposes of teaching Rails by example.
+A mini e-commerce application built with Rails 4.2.
 
-## Screenshots
+## Final Product
 
+!["Home Page"](https://github.com/GleefullyChill/Jungle_On_Rails/blob/master/public/docs/screenshots/Home%20Page.png)
 
+!["Admin Dashboard and Dropdown Actions"](https://github.com/GleefullyChill/Jungle_On_Rails/blob/master/public/docs/screenshots/Admin%20Actions.png)
+
+!["Full Cart, Ready to Pay"](https://github.com/GleefullyChill/Jungle_On_Rails/blob/master/public/docs/screenshots/Card%20Input%20and%20Cart.png)
+
+!["Successful Order Details"](https://github.com/GleefullyChill/Jungle_On_Rails/blob/master/public/docs/screenshots/Order%20Details.png)
 
 ## Additional Steps for Apple M1 Machines
 
