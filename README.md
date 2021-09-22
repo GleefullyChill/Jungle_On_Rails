@@ -1,6 +1,6 @@
 # Jungle
 
-A mini e-commerce application built with Rails 4.2.
+A mini e-commerce application built with Rails 4.2. Designed to show capabilities with Ruby on Rails even with an older version. If I were to inherit an older code base, I know the basics of how to prepare my computer for it and have the ability to work with the older syntax.
 
 ## Final Product
 
